@@ -17,16 +17,7 @@ internal class CoreDataManager {
     }
     
     internal lazy var viewContext: NSManagedObjectContext = {
-        var managedObjectContext: NSManagedObjectContext?
-        if #available(iOS 10.0, *) {
-            managedObjectContext = self.persistentContainer.viewContext
-        } else {
-            // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
-            let coordinator = self.persistentStoreCoordinator
-            managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-            managedObjectContext?.persistentStoreCoordinator = coordinator
-        }
-        return managedObjectContext!
+        return self.persistentContainer.viewContext
     }()
     
     private lazy var applicationDocumentsDirectory: URL = {
@@ -53,7 +44,25 @@ internal class CoreDataManager {
         }
     }()
     
-    @available(iOS 10.0, *)
+    var storeURL: URL? {
+        var url: URL?
+        let descriptions = persistentContainer.persistentStoreDescriptions
+        if let firstDescription = descriptions.first {
+            url = firstDescription.url
+        }
+        return url
+    }
+    
+    // Used for integration testing at this time. Try to avoid using in the library! We have different mechanisms in place for "deleting" (see Wendy.clear()).
+    internal func destroy() throws {
+        guard let storeURL = storeURL else {
+            return
+        }
+        
+        try persistentStoreCoordinator.destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
+        try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
+    }
+    
     private lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
