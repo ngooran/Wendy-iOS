@@ -3,7 +3,7 @@ import Foundation
 public extension PendingTask {
     func describe() -> String {
         let taskIdString: String = (taskId != nil) ? String(describing: taskId!) : "none"
-        let dataIdString: String = (dataId != nil) ? String(describing: dataId!) : "none"
+        let dataIdString: String = (data != nil) ? String(describing: data!) : "none"
         let groupIdString: String = (groupId != nil) ? String(describing: groupId!) : "none"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy HH:mm:ss Z"

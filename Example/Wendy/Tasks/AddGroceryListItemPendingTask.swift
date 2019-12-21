@@ -22,14 +22,14 @@ class AddGroceryListItemPendingTask: PendingTask {
     static let tag: Tag = String(describing: AddGroceryListItemPendingTask.self)
 
     var taskId: Double?
-    var dataId: String?
+    var data: Data?
     var groupId: String?
     var manuallyRun: Bool = false
     var createdAt: Date?
 
     convenience init(groceryListItemName: String, manuallyRun: Bool, groupId: String?) {
         self.init()
-        self.dataId = groceryListItemName
+        self.data = groceryListItemName.data
         self.manuallyRun = manuallyRun
         self.groupId = groupId
     }

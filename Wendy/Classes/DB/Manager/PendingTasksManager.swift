@@ -90,9 +90,6 @@ internal class PendingTasksManager {
         if let groupId = task.groupId {
             keyValues["groupId = %@"] = groupId as NSObject
         }
-        if let dataId = task.dataId {
-            keyValues["dataId = %@"] = dataId as NSObject
-        }
 
         let predicates = keyValues.map { NSPredicate(format: $0.key, $0.value) }
         pendingTaskFetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)

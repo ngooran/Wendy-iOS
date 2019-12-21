@@ -88,7 +88,7 @@ class PendingTaskTableViewCell: UITableViewCell {
 
         idLabel.text = "id: \(item.taskId!)"
         tagLabel.text = "tag: \(item.tag)"
-        dataIdLabel.text = "dataId: \(item.dataId!)"
+        dataIdLabel.text = "data: \(item.dataString)"
         groupIdLabel.text = "groupId: \(item.groupId ?? "(none)")"
         manuallyRunTaskLabel.text = "manuallyRun: \(item.manuallyRun)"
         createdAtLabel.text = "createdAt: \(item.createdAt!)"

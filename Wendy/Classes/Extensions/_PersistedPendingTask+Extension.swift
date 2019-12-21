@@ -16,7 +16,7 @@ internal extension PersistedPendingTask {
 
     convenience init(pendingTask: PendingTask) {
         self.init()
-        self.dataId = pendingTask.dataId
+        self.data = pendingTask.data
         self.groupId = pendingTask.groupId
         self.tag = pendingTask.tag
         self.manuallyRun = pendingTask.manuallyRun
